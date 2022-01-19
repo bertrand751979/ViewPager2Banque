@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:strokeColor="#181919"
+        app:cardCornerRadius="20sp"
+        android:layout_margin="4dp"
+        app:strokeWidth="2sp">
+
+        <TextView
+            android:id="@+id/raw_deposit_title"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Compte"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="22dp"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/raw_deposit_amount"
+            android:layout_width="80dp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="170dp"
+            android:text="Montant"
+            android:textSize="18sp"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
