@@ -22,7 +22,6 @@ import com.example.viewpager2banque.R;
 import java.util.ArrayList;
 
 public class DepositFragment extends Fragment {
-    //public  ArrayList<Account> myListBankAccount = new ArrayList<>();
     private RecyclerView recyclerView;
     private AccountAdapter accountAdapter;
     private Button btnAddDeposit;
@@ -38,6 +37,7 @@ public class DepositFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
     }
 
     @Nullable
@@ -79,6 +79,7 @@ public class DepositFragment extends Fragment {
         accountAdapter.notifyDataSetChanged();
         ApplicationData.getInstance().setOperationDeposit(account);
         Toast.makeText(DepositFragment.this.getContext(),"Ajouté"+account.getAmountDeposit(),Toast.LENGTH_SHORT).show();
+        ApplicationData.getInstance().calculDeposit();
     }
 
     private void setViewItem(){
@@ -86,7 +87,4 @@ public class DepositFragment extends Fragment {
         accountAdapter = new AccountAdapter(ApplicationData.getInstance().myListBankAccount);
         recyclerView.setAdapter(accountAdapter);
     }
-
-
-
 }

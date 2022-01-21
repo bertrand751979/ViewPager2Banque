@@ -1,6 +1,7 @@
 package com.example.viewpager2banque.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +17,20 @@ import com.example.viewpager2banque.model.Account;
 
 public class BalanceFragment extends Fragment {
     public TextView result;
-    public int sum ;
-    public int sumOfDeposit=0;
-    public int sumOfWithdrawal=0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(BalanceFragment.this.getContext(),"Taille"+ApplicationData.getInstance().myListBankAccount.size(),Toast.LENGTH_SHORT).show();
-        Toast.makeText(BalanceFragment.this.getContext(),"Taille"+ApplicationData.getInstance().myListWithdrawal.size(),Toast.LENGTH_SHORT).show();
-        sumOfListDeposit();
-        sumOfListWithdrawal();
-        calculate();
+        if((ApplicationData.getInstance().getOperationDeposit()!=null)&&(ApplicationData.getInstance().getOperationWithdrawal()!=null)){
+            ApplicationData.getInstance().calculate(result);
+
+        }
+
     }
 
     @Nullable
@@ -46,32 +43,5 @@ public class BalanceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         result = view.findViewById(R.id.txt_final_balance);
-    }
-
-    public int sumOfListDeposit(){
-        for(Account account: ApplicationData.getInstance().myListBankAccount) {
-            sumOfDeposit += account.getAmountDeposit();
-        }
-        Toast.makeText(BalanceFragment.this.getContext(),"Total depot:  "+sumOfDeposit,Toast.LENGTH_SHORT).show();
-        return sumOfDeposit;
-    }
-
-    public int sumOfListWithdrawal(){
-        for(Account account:ApplicationData.getInstance().myListWithdrawal){
-            sumOfWithdrawal+= account.getAmountWithdrawal();
-        }
-        Toast.makeText(BalanceFragment.this.getContext(),"Total Retrait:  "+sumOfWithdrawal,Toast.LENGTH_SHORT).show();
-        return sumOfWithdrawal;
-    }
-
-    public void calculate(){
-        if(ApplicationData.getInstance().getOperationDeposit().getAccountTitle().equalsIgnoreCase(ApplicationData.getInstance().operationWithdrawal.getWithdrawalTitle())) {
-            sum = (ApplicationData.getInstance().getOperationDeposit().getAmountDeposit()) - (ApplicationData.getInstance().getOperationWithdrawal().getAmountWithdrawal());
-            sum= (sumOfDeposit)-(sumOfWithdrawal);
-            Toast.makeText(BalanceFragment.this.getContext(), "TOTAL: " + sum, Toast.LENGTH_SHORT).show();
-            result.setText(String.valueOf(sum));
-        }else{
-            result.setText("ERREURE DE DONNEES DE COMPTE");
-        }
     }
 }

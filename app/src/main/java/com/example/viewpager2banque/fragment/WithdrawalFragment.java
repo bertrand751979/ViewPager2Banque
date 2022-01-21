@@ -33,8 +33,11 @@ public class WithdrawalFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ApplicationData.getInstance().getOperationDeposit().getAmountDeposit();
-        ApplicationData.getInstance().getOperationDeposit().getAccountTitle();
+        if(ApplicationData.getInstance().getOperationDeposit()!=null){
+            ApplicationData.getInstance().getOperationDeposit().getAmountDeposit();
+            ApplicationData.getInstance().getOperationDeposit().getAccountTitle();
+        }
+
     }
 
     @Override
@@ -51,8 +54,8 @@ public class WithdrawalFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toast.makeText(WithdrawalFragment.this.getContext(),"Montant du dépot:  "+ ApplicationData.getInstance().getOperationDeposit().getAmountDeposit()
-                ,Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(WithdrawalFragment.this.getContext(),"Montant du dépot:  "+ ApplicationData.getInstance().getOperationDeposit().getAmountDeposit()
+       //         ,Toast.LENGTH_SHORT).show();
 
 
 
@@ -81,8 +84,7 @@ public class WithdrawalFragment extends Fragment {
         withdrawalAdapter.setListWithdrawals(ApplicationData.getInstance().myListWithdrawal);
         withdrawalAdapter.notifyDataSetChanged();
         ApplicationData.getInstance().setOperationWithdrawal(account);
-        Toast.makeText(WithdrawalFragment.this.getContext(),"Compte du retrait: "+account.getWithdrawalTitle(),Toast.LENGTH_SHORT).show();
-        Toast.makeText(WithdrawalFragment.this.getContext(),"Montant de retrait: "+account.getAmountWithdrawal(),Toast.LENGTH_SHORT).show();
+        ApplicationData.getInstance().calculWithdrawal();
     }
 
     private void setViewItem(){
@@ -90,6 +92,7 @@ public class WithdrawalFragment extends Fragment {
         withdrawalAdapter = new WithdrawalAdapter(ApplicationData.getInstance().myListWithdrawal);
         recyclerView.setAdapter(withdrawalAdapter);
     }
+
 
 
 }
