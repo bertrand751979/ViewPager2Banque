@@ -7,6 +7,9 @@ import android.widget.Toast;
 import com.example.viewpager2banque.fragment.DepositFragment;
 import com.example.viewpager2banque.fragment.WithdrawalFragment;
 import com.example.viewpager2banque.model.Account;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class ApplicationData {
@@ -18,6 +21,7 @@ public class ApplicationData {
     public int sum ;
     public int sumOfDeposit=0;
     public int sumOfWithdrawal=0;
+    public TextView operationResult;
 
 
     private ApplicationData() {
@@ -30,6 +34,22 @@ public class ApplicationData {
             INSTANCE = new ApplicationData();
         }
         return INSTANCE;
+    }
+
+    public ArrayList<Account> getMyListBankAccount() {
+        return myListBankAccount;
+    }
+
+    public ArrayList<Account> getMyListWithdrawal() {
+        return myListWithdrawal;
+    }
+
+    public void setMyListWithdrawal(ArrayList<Account> myListWithdrawal) {
+        this.myListWithdrawal = myListWithdrawal;
+    }
+
+    public void setMyListBankAccount(ArrayList<Account> myListBankAccount) {
+        this.myListBankAccount = myListBankAccount;
     }
 
     public Account getBalAmount() {
@@ -56,8 +76,15 @@ public class ApplicationData {
         this.operationWithdrawal = operationWithdrawal;
     }
 
+    public TextView getOperationResult() {
+        return operationResult;
+    }
 
-      public int sumOfListDeposit(){
+    public void setOperationResult(TextView operationResult) {
+        this.operationResult = operationResult;
+    }
+
+    public int sumOfListDeposit(){
         for(Account account: ApplicationData.getInstance().myListBankAccount) {
             sumOfDeposit = sumOfDeposit+account.getAmountDeposit();
             Log.d("T D", String.valueOf(sumOfDeposit));
@@ -103,7 +130,7 @@ public class ApplicationData {
         return sommeWithdrawal;
     }
 
-    public void calculate(TextView theResult){
+    /*public void sumCalculate(TextView theResult){
         int sum=0;
         if(ApplicationData.getInstance().getOperationDeposit().getAccountTitle().equalsIgnoreCase(ApplicationData.getInstance().operationWithdrawal.getWithdrawalTitle())) {
             sum= (ApplicationData.getInstance().calculDeposit())-(ApplicationData.getInstance().calculWithdrawal());
@@ -113,6 +140,22 @@ public class ApplicationData {
         }else{
             theResult.setText("ERREURE DE DONNEES DE COMPTE");
         }
+    }*/
+
+    public void addAccount(String title, int amount){
+        Account account = new Account();
+        account.setAccountTitle(title);
+        account.setAmountDeposit(amount);
+        myListBankAccount.add(account);
+        ApplicationData.getInstance().setOperationDeposit(account);
+    }
+
+    public void addWithdrawal(String title, int amount){
+        Account account = new Account();
+        account.setWithdrawalTitle(title);
+        account.setAmountWithdrawal(amount);
+        myListWithdrawal.add(account);
+        ApplicationData.getInstance().setOperationWithdrawal(account);
     }
 
 }

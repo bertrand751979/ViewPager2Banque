@@ -15,12 +15,12 @@ import java.util.ArrayList;
 public class AccountAdapter extends RecyclerView.Adapter<AccountViewHolder> {
     private ArrayList<Account>listAccounts;
 
-    public AccountAdapter(ArrayList<Account> listAccounts) {
-        this.listAccounts = listAccounts;
+    public AccountAdapter() {
     }
 
     public void setListAccounts(ArrayList<Account> listAccounts) {
         this.listAccounts = listAccounts;
+        notifyDataSetChanged();
     }
 
     @NonNull

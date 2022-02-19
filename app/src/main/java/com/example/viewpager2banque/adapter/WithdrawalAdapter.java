@@ -15,14 +15,15 @@ import com.example.viewpager2banque.viewHolder.WithdrawalViewHolder;
 import java.util.ArrayList;
 
 public class WithdrawalAdapter extends RecyclerView.Adapter<WithdrawalViewHolder> {
-    private ArrayList<Account>listWithdrawals;
+    private ArrayList<Account>listWithdrawals = new ArrayList<>();
 
-    public WithdrawalAdapter(ArrayList<Account> listWithdrawals) {
-        this.listWithdrawals = listWithdrawals;
+    public WithdrawalAdapter() {
+
     }
 
     public void setListWithdrawals(ArrayList<Account> listWithdrawals) {
         this.listWithdrawals = listWithdrawals;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -42,4 +43,6 @@ public class WithdrawalAdapter extends RecyclerView.Adapter<WithdrawalViewHolder
     public int getItemCount() {
         return listWithdrawals.size();
     }
+
+
 }

@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,16 +29,19 @@ public class DepositFragment extends Fragment {
     private Button btnAddDeposit;
     private EditText editTitleDeposit;
     private EditText editAmountDeposit;
+    private DepositFragmentViewModel viewModelDeposit;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModelDeposit = new ViewModelProvider(this).get(DepositFragmentViewModel.class);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        accountAdapter.setListAccounts(ApplicationData.getInstance().myListBankAccount);
 
     }
 
@@ -56,13 +61,16 @@ public class DepositFragment extends Fragment {
         btnAddDeposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addBankAccount();
+            viewModelDeposit.toAddAccount(editTitleDeposit.getText().toString(),Integer.parseInt(editAmountDeposit.getText().toString()));
+                Toast.makeText(DepositFragment.this.getContext(), "Nbre Compte"+ApplicationData.getInstance().myListBankAccount.size(), Toast.LENGTH_SHORT).show();
+                    ApplicationData.getInstance().calculDeposit();
+
             }
         });
         setViewItem();
     }
 
-    private void addBankAccount(){
+   /* private void addBankAccount(){
         if(editTitleDeposit.getText().toString().equalsIgnoreCase("")){
             Toast.makeText(DepositFragment.this.getContext(), "Veuillez sair un compte", Toast.LENGTH_SHORT).show();
             return;
@@ -80,11 +88,19 @@ public class DepositFragment extends Fragment {
         ApplicationData.getInstance().setOperationDeposit(account);
         Toast.makeText(DepositFragment.this.getContext(),"Ajouté"+account.getAmountDeposit(),Toast.LENGTH_SHORT).show();
         ApplicationData.getInstance().calculDeposit();
-    }
+    }*/
 
     private void setViewItem(){
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        accountAdapter = new AccountAdapter(ApplicationData.getInstance().myListBankAccount);
+        viewModelDeposit.toPostMyListAccount();
+        accountAdapter = new AccountAdapter();
         recyclerView.setAdapter(accountAdapter);
+        viewModelDeposit.accountLiveData.observe(getViewLifecycleOwner(), new Observer<ArrayList<Account>>() {
+            @Override
+            public void onChanged(ArrayList<Account> accounts) {
+            accountAdapter.setListAccounts(ApplicationData.getInstance().myListBankAccount);
+            }
+        });
+        viewModelDeposit.toPostMyListAccount();
     }
 }
